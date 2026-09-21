@@ -92,7 +92,7 @@ CropCareAI/
 ### 1. Clone Repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone <https://github.com/Ganeshh06/CropCare-AI.git>
 cd CropCareAI
 ```
 
@@ -138,17 +138,10 @@ http://127.0.0.1:5000/
 
 ---
 
-## 🌿 Supported Plants
-
-Apple • Blueberry • Cherry • Corn • Grape • Pepper • Orange • Peach • Potato • Soybean • Strawberry • Tomato • Squash • Raspberry
-
----
-
 ## 🔮 Future Improvements
 
 * 📱 Mobile application
 * 🌦️ Better weather integration
-* 🌱 More crop support
 * 🤖 Improved AI models
 * 🧑‍🌾 Multilingual interface
 * 🗣️ Voice-based assistance
@@ -163,15 +156,6 @@ B.Tech Computer Science & Engineering
 
 **Interests:** Software Engineering • Full Stack Development • AI/ML • DSA
 
----
-
-## 📜 Attribution
-
-This project is an **adapted/extended implementation** based on an existing open-source agriculture project.
-
-Original project authors and dataset creators are credited through the respective project and dataset references above.
-
-Please follow the licenses of the original project and datasets when redistributing or using this project.
 
 ---
 
