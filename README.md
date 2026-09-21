@@ -126,7 +126,7 @@ http://127.0.0.1:5000/
 
 ## 🌐 Live Demo
 
-🚀 **Live Website:** Coming Soon
+🚀 https://cropcare-ai-vvag.onrender.com/
 
 ---
 
