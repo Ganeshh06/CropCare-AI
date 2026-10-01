@@ -1,229 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<title>{{ title }}</title>
-	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CropCare AI – Grow the right crop, feed it right, catch disease early</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F7EC; --ink:#14301F; --muted:#4F6656; --leaf:#2C7A3F; --leaf-d:#1D5A2D;
+  --soil:#7B4A28; --sun:#E9B824; --card:#FFFFFF; --line:#D5E2CC; --alert:#C2452D;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:17px}
+h1,h2,h3{font-family:'Bricolage Grotesque',system-ui,sans-serif;line-height:1.1;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 
-	<!-- for-mobile-apps -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="utf-8">
-	<meta name="keywords" content="Agro Harvest Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+/* nav */
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque';font-weight:800;font-size:22px}
+.logo svg{width:30px;height:30px}
+nav ul{display:flex;gap:28px;list-style:none;font-weight:600}
+nav ul a:hover{color:var(--leaf)}
+.btn{display:inline-block;padding:13px 24px;border-radius:10px;font-weight:600;border:2px solid var(--leaf);transition:background .15s,color .15s}
+.btn.solid{background:var(--leaf);color:#fff}
+.btn.solid:hover{background:var(--leaf-d);border-color:var(--leaf-d)}
+.btn.ghost{color:var(--leaf-d)}
+.btn.ghost:hover{background:var(--leaf);color:#fff}
 
-	<style>
-		html {
-			font-size: 1rem;
-		}
+/* hero */
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center;padding:48px 0 88px}
+.hero h1{font-size:clamp(40px,5.6vw,68px);font-weight:800}
+.hero p{margin:22px 0 32px;font-size:20px;color:var(--muted);max-width:480px}
+.hero .cta{display:flex;gap:14px;flex-wrap:wrap}
 
-		@media (min-width: 576px) {
-			html {
-				font-size: 1.25rem;
-			}
-		}
+/* scan panel */
+.scan{background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 20px 40px -24px rgba(20,48,31,.35)}
+.leafbox{position:relative;border-radius:14px;background:linear-gradient(160deg,#CFE6BF,#9CC987);aspect-ratio:4/3;overflow:hidden}
+.leafbox svg{width:100%;height:100%}
+.spot{fill:none;stroke:var(--alert);stroke-width:3;stroke-dasharray:6 5}
+.tag{position:absolute;left:14px;bottom:14px;background:var(--alert);color:#fff;font-size:14px;font-weight:600;padding:5px 12px;border-radius:99px}
+.result{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 6px 4px}
+.result h3{font-size:21px}
+.result small{color:var(--muted);font-size:15px}
+.conf{font-family:'Bricolage Grotesque';font-weight:800;font-size:30px;color:var(--leaf)}
 
-		@media (min-width: 768px) {
-			html {
-				font-size: 1.5rem;
-			}
-		}
+/* tools */
+section{padding:72px 0}
+.head{max-width:560px;margin-bottom:40px}
+.head h2{font-size:clamp(30px,4vw,44px);font-weight:700}
+.head p{color:var(--muted);margin-top:12px}
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.tool{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:14px;transition:border-color .15s}
+.tool:hover{border-color:var(--leaf)}
+.tool .ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center}
+.tool .ic svg{width:28px;height:28px}
+.tool h3{font-size:24px}
+.tool p{color:var(--muted);flex:1}
+.tool .in{font-size:15px;color:var(--ink);border-top:1px solid var(--line);padding-top:12px}
+.tool .go{font-weight:600;color:var(--leaf-d)}
+.i1{background:#DDEFD2;color:var(--leaf-d)} .i2{background:#F1E3D3;color:var(--soil)} .i3{background:#FBEFC4;color:#8A6A00}
 
-		@media (min-width: 992px) {
-			html {
-				font-size: 1.75rem;
-			}
-		}
+/* steps */
+.steps{background:var(--leaf-d);color:#EAF4E3;border-radius:28px;padding:56px}
+.steps h2{font-size:clamp(28px,3.6vw,40px);margin-bottom:36px;color:#fff}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;counter-reset:s}
+.step{counter-increment:s;border-left:3px solid var(--sun);padding-left:20px}
+.step::before{content:counter(s);font-family:'Bricolage Grotesque';font-weight:800;font-size:34px;color:var(--sun)}
+.step h3{font-size:21px;color:#fff;margin:4px 0 8px}
+.step p{color:#C9DFC0}
 
-		@media (min-width: 1200px) {
-			html {
-				font-size: 2rem;
-			}
+footer{padding:48px 0;color:var(--muted);font-size:15px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
-			html {
-				font-size: 1rem;
-			}
-
-			h1 {
-				font-size: 1.2rem;
-			}
-
-			h2 {
-				font-size: 1.1rem;
-			}
-
-			@media (min-width: 768px) {
-				html {
-					font-size: 1.1rem;
-				}
-
-				h1 {
-					font-size: 1.3rem;
-				}
-
-				h2 {
-					font-size: 1.2rem;
-				}
-			}
-
-			@media (min-width: 991px) {
-				html {
-					font-size: 1.2rem;
-				}
-
-				h1 {
-					font-size: 1.5rem;
-				}
-
-				h2 {
-					font-size: 1.4rem;
-				}
-			}
-
-			@media (min-width: 1200px) {
-				html {
-					font-size: 1.2rem;
-				}
-
-				h1 {
-					font-size: 1.7rem;
-				}
-
-				h2 {
-					font-size: 1.6rem;
-				}
-			}
-
-		}
-	</style>
-	<script>
-		addEventListener("load", function () {
-			setTimeout(hideURLbar, 0);
-		}, false);
-
-		function hideURLbar() {
-			window.scrollTo(0, 1);
-		}
-
-	</script>
-
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
-	</body>
-	<!-- css files -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel='stylesheet' type='text/css' />
-	<!-- bootstrap css -->
-	<link href="{{ url_for('static', filename='css/style.css') }}" rel='stylesheet' type='text/css' />
-	<!-- custom css -->
-	<link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet"><!-- fontawesome css -->
-	<!-- //css files -->
-	<!-- <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png?') }}"> -->
-
-
-	<script type="text/JavaScript" src="{{ url_for('static', filename='scripts/cities.js') }}"></script>
-
-
-	<!-- google fonts -->
-	<link href="//fonts.googleapis.com/css?family=Thasadith:400,400i,700,700i&amp;subset=latin-ext,thai,vietnamese"
-		rel="stylesheet">
-	<!-- //google fonts -->
-
-	<style>
-		header {
-			background-color: rgba(30, 30, 30, 1);
-			margin-top: 0rem;
-			display: block;
-
-		}
-	</style>
+@media(max-width:860px){
+  .hero,.tools,.sgrid{grid-template-columns:1fr}
+  nav ul{display:none}
+  .steps{padding:36px 24px}
+}
+@media(prefers-reduced-motion:no-preference){
+  .spot{animation:dash 6s linear infinite}
+  @keyframes dash{to{stroke-dashoffset:-110}}
+}
+</style>
+{% block head %}{% endblock %}
 </head>
-
 <body>
+<div class="wrap">
+  <nav>
+    <a href="/" class="logo" aria-label="CropCare AI home">
+      <svg viewBox="0 0 32 32" fill="none"><path d="M16 29V13" stroke="#2C7A3F" stroke-width="2.5" stroke-linecap="round"/><path d="M16 14C16 7 11 4 5 4c0 7 4 10 11 10Z" fill="#2C7A3F"/><path d="M16 19c0-5 4-8 11-8 0 6-4 9-11 8Z" fill="#E9B824"/></svg>
+      CropCare AI
+    </a>
+    <ul>
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="https://github.com/Ganeshh06/CropCare-AI" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+    <a href="{{ url_for('disease_prediction') }}" class="btn solid">Scan a leaf</a>
+  </nav>
 
-	<!-- Navigation -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top" style="background-color: #1C00ff00;">
-		<div class="container">
-			<a class="navbar-brand" href="{{ url_for('home') }}">
-				<img src="{{ url_for('static', filename='images/logo.jpg') }}" style="width: 90px; height: 55px" alt="">
-			</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active">
-						<a class="nav-link" href="{{ url_for('home') }}">Home
-							<span class="sr-only">(current)</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('crop_recommend') }}">Crop</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('fertilizer_recommendation') }}">Fertilizer</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('disease_prediction') }}">Disease</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+  {% block body %}
+  <header class="hero">
+    <div>
+      <h1>Know what your crop needs before it shows.</h1>
+      <p>Pick the right crop for your soil, get a fertilizer plan, and spot leaf disease from a single photo.</p>
+      <div class="cta">
+        <a href="{{ url_for('disease_prediction') }}" class="btn solid">Scan a leaf</a>
+        <a href="{{ url_for('crop_recommend') }}" class="btn ghost">Find the right crop</a>
+      </div>
+    </div>
 
+    <div class="scan" aria-label="Example leaf diagnosis">
+      <div class="leafbox">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <path d="M40 150C110 40 270 30 370 140 270 260 110 270 40 150Z" fill="#4E9A45"/>
+          <path d="M40 150C140 148 270 146 370 140" stroke="#2F6B2D" stroke-width="5" fill="none"/>
+          <g stroke="#2F6B2D" stroke-width="2.5" fill="none" opacity=".7">
+            <path d="M120 149 170 90M170 148 230 85M230 146 290 92M120 150 170 210M170 148 235 212M235 146 295 205"/>
+          </g>
+          <circle cx="205" cy="112" r="15" fill="#7A4B26"/><circle cx="262" cy="185" r="11" fill="#7A4B26"/><circle cx="150" cy="190" r="8" fill="#8A5A30"/>
+          <circle class="spot" cx="205" cy="112" r="28"/><circle class="spot" cx="262" cy="185" r="23"/><circle class="spot" cx="150" cy="190" r="19"/>
+        </svg>
+        <span class="tag">Disease found</span>
+      </div>
+      <div class="result">
+        <div><h3>Tomato – Early Blight</h3><small>Remove infected leaves and treat this week</small></div>
+        <div class="conf">96%</div>
+      </div>
+    </div>
+  </header>
 
+  <section id="tools" style="padding-top:24px">
+    <div class="head">
+      <h2>Three tools, one field</h2>
+      <p>Use them on their own or in order, from sowing to harvest.</p>
+    </div>
+    <div class="tools">
+      <a href="{{ url_for('crop_recommend') }}" class="tool">
+        <div class="ic i1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22V10M12 12C12 7 9 5 5 5c0 5 3 7 7 7ZM12 15c0-4 3-6 7-6 0 4-3 6-7 6Z"/></svg></div>
+        <h3>Crop recommendation</h3>
+        <p>Tells you which crop suits your land and weather.</p>
+        <div class="in">You enter: N, P, K, pH, rainfall, temperature, humidity</div>
+        <span class="go">Find my crop</span>
+      </a>
+      <a href="{{ url_for('fertilizer_recommendation') }}" class="tool">
+        <div class="ic i2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 13H7L6 8ZM9 8V5h6v3M9 14h6"/></svg></div>
+        <h3>Fertilizer recommendation</h3>
+        <p>Suggests what to add when your soil is short on nutrients.</p>
+        <div class="in">You enter: crop, soil type, N, P, K, moisture</div>
+        <span class="go">Get a fertilizer plan</span>
+      </a>
+      <a href="{{ url_for('disease_prediction') }}" class="tool">
+        <div class="ic i3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Plant disease detection</h3>
+        <p>Identifies the disease from a photo of the leaf.</p>
+        <div class="in">You upload: one clear leaf photo (JPG or PNG)</div>
+        <span class="go">Scan a leaf</span>
+      </a>
+    </div>
+  </section>
 
+  <section id="how">
+    <div class="steps">
+      <h2>From field data to a decision in a minute</h2>
+      <div class="sgrid">
+        <div class="step"><h3>Give your field details</h3><p>Type in soil and weather values, or upload a leaf photo.</p></div>
+        <div class="step"><h3>The model runs</h3><p>Machine-learning models trained on public Kaggle datasets read your input.</p></div>
+        <div class="step"><h3>Act on the result</h3><p>You get a crop, a fertilizer, or a disease name with what to do next.</p></div>
+      </div>
+    </div>
+  </section>
+  {% endblock %}
 
-	{% block body %} {% endblock %}
-
-	<!-- footer -->
-	<footer class="text-center py-5">
-		<div class="container py-md-3">
-			<!-- logo -->
-			<h2 class="logo2 text-center">
-				<a href="{{ url_for('home') }}">
-					Harvestify
-				</a>
-			</h2>
-			<!-- //logo -->
-			<!-- address -->
-			<div class="contact-left-footer mt-4">
-
-
-
-
-
-				<!-- <a href="community.html">Community</a> -->
-				</p>
-			</div>
-			<div class="w3l-copy text-center">
-				<p class="text-da">An Environmental Intelligence Startup<br> </p>
-			</div>
-			<p class="homelogo">
-			<p>Made with ❤️ by Ganesh</p>
-			<p>&copy; Copyright 2026 Ganesh Prajapati</p>
-			
-		</div>
-	</footer>
-	<!-- //footer -->
-
-	<!-- move top icon -->
-	<a href="#home" class="move-top text-center"></a>
-	<!-- //move top icon -->
+  <footer>
+    <span>CropCare AI – built with Flask, scikit-learn and PyTorch</span>
+    <span>Results are guidance. Confirm with a local agronomist before large treatments.</span>
+  </footer>
+</div>
+{% block scripts %}{% endblock %}
 </body>
-
 </html>

@@ -77,27 +77,57 @@ crop_recommendation_model = pickle.load(
 # Custom functions for calculations
 
 
+# def weather_fetch(city_name):
+#     """
+#     Fetch and returns the temperature and humidity of a city
+#     :params: city_name
+#     :return: temperature, humidity
+#     """
+#     api_key = config.weather_api_key
+#     base_url = "http://api.openweathermap.org/data/2.5/weather?"
+
+#     complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+#     response = requests.get(complete_url)
+#     x = response.json()
+
+#     if x["cod"] != "404":
+#         y = x["main"]
+
+#         temperature = round((y["temp"] - 273.15), 2)
+#         humidity = y["humidity"]
+#         return temperature, humidity
+#     else:
+#         return None
 def weather_fetch(city_name):
     """
-    Fetch and returns the temperature and humidity of a city
-    :params: city_name
-    :return: temperature, humidity
+    Fetch and return the temperature and humidity of a city.
+    :param city_name: Name of the city
+    :return: temperature, humidity or None
     """
+
     api_key = config.weather_api_key
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
 
     complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+
     response = requests.get(complete_url)
     x = response.json()
 
-    if x["cod"] != "404":
-        y = x["main"]
+    print("Weather API Response:", x)
 
-        temperature = round((y["temp"] - 273.15), 2)
-        humidity = y["humidity"]
-        return temperature, humidity
-    else:
+    # Check API response
+    if response.status_code != 200:
         return None
+
+    if "main" not in x:
+        return None
+
+    y = x["main"]
+
+    temperature = round((y["temp"] - 273.15), 2)
+    humidity = y["humidity"]
+
+    return temperature, humidity
 
 
 def predict_image(img, model=disease_model):
@@ -133,8 +163,7 @@ app = Flask(__name__)
 
 @ app.route('/')
 def home():
-    title = 'Harvestify - Home'
-    return render_template('index.html', title=title)
+    return render_template('layout.html')
 
 # render crop recommendation form page
 

@@ -1,14 +1,75 @@
+{% extends 'layout.html' %}
 
-{% extends 'layout.html' %} {% block body %}
+{% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F2F7EC; --ink: #14301F; --muted: #4F6656; --leaf: #2C7A3F; --leaf-d: #1D5A2D;
+    --forest: #14301F; --sun: #E9B824; --line: #D5E2CC;
+  }
+  html body { background-color: #F2F7EC !important; color: #14301F; font-family: 'Source Sans 3', system-ui, sans-serif; }
+  .rs-page h1, .rs-page h2, .rs-page h3 { font-family: 'Bricolage Grotesque', system-ui, sans-serif !important; letter-spacing: -.02em; color: #14301F !important; }
 
+  .rs-page { padding: 64px 0 24px; }
+  .rs-card {
+    max-width: 640px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 22px;
+    padding: 36px 32px;
+    text-align: center;
+    box-shadow: 0 20px 40px -28px rgba(20, 48, 31, .35);
+  }
+  .rs-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #DDEFD2; color: var(--leaf-d);
+    font-weight: 600; font-size: .95rem;
+    padding: 6px 14px; border-radius: 99px;
+  }
+  .rs-badge svg { width: 16px; height: 16px; }
+  .rs-label { margin-top: 24px; color: var(--muted); font-size: 1rem; }
+  .rs-result {
+    margin: 8px 0 0;
+    font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 4.6vw, 42px);
+    line-height: 1.15;
+    letter-spacing: -.02em;
+    color: var(--ink);
+    word-break: break-word;
+  }
+  .rs-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+  .rs-btn {
+    display: inline-block; padding: 13px 24px; border-radius: 10px;
+    font-weight: 600; border: 2px solid var(--leaf);
+    transition: background .15s, color .15s;
+  }
+  .rs-btn:hover { text-decoration: none; }
+  .rs-btn.solid { background: var(--leaf); color: #fff; }
+  .rs-btn.solid:hover { background: var(--leaf-d); border-color: var(--leaf-d); color: #fff; }
+  .rs-btn.ghost { color: var(--leaf-d); background: transparent; }
+  .rs-btn.ghost:hover { background: var(--leaf); color: #fff; }
+  .rs-note { max-width: 640px; margin: 20px auto 0; text-align: center; font-size: .92rem; color: var(--muted); }
+</style>
+{% endblock %}
 
-<div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
-  <div class="row">
-      <div class="col-sm py-2 py-md-3">
-          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
-            <p class="text-center" style="color: black; font-size: 22px;">{{ prediction }}</p>
-          </div>
-      </div>
+{% block body %}
+<div class="container rs-page">
+  <div class="rs-card">
+    <span class="rs-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>
+      Scan complete
+    </span>
+    <p class="rs-label">Your plant was identified as</p>
+    <h1 class="rs-result">{{ prediction | replace('___', ' – ') | replace('_', ' ') }}</h1>
+
+    <div class="rs-actions">
+      <a href="{{ url_for('disease_prediction') }}" class="rs-btn solid">Scan another leaf</a>
+      <a href="{{ url_for('fertilizer_recommendation') }}" class="rs-btn ghost">Get a fertilizer plan</a>
+    </div>
   </div>
+  <p class="rs-note">Results are guidance. Confirm with a local agronomist before a large treatment.</p>
 </div>
 {% endblock %}
