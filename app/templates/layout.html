@@ -20,11 +20,15 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 
 /* nav */
-nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:20px;flex-wrap:wrap}
 .logo{display:flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque';font-weight:800;font-size:22px}
 .logo svg{width:30px;height:30px}
 nav ul{display:flex;gap:28px;list-style:none;font-weight:600}
 nav ul a:hover{color:var(--leaf)}
+.lang-picker{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff}
+.lang-picker label{font-size:14px;font-weight:700;color:var(--muted)}
+.lang-picker select{border:none;background:transparent;color:var(--ink);font-size:15px;font-weight:600;padding:4px 0;outline:none;cursor:pointer}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .btn{display:inline-block;padding:13px 24px;border-radius:10px;font-weight:600;border:2px solid var(--leaf);transition:background .15s,color .15s}
 .btn.solid{background:var(--leaf);color:#fff}
 .btn.solid:hover{background:var(--leaf-d);border-color:var(--leaf-d)}
@@ -99,21 +103,29 @@ footer{padding:48px 0;color:var(--muted);font-size:15px;display:flex;justify-con
       CropCare AI
     </a>
     <ul>
-      <li><a href="#tools">Tools</a></li>
-      <li><a href="#how">How it works</a></li>
+      <li><a href="#tools" data-i18n="navTools">Tools</a></li>
+      <li><a href="#how" data-i18n="navHow">How it works</a></li>
       <li><a href="https://github.com/Ganeshh06/CropCare-AI" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
-    <a href="{{ url_for('disease_prediction') }}" class="btn solid">Scan a leaf</a>
+    <div class="lang-picker" aria-label="Language selector">
+      <label for="lang-select" class="sr-only">Select language</label>
+      <select id="lang-select" aria-label="Select language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="ur">اردو</option>
+      </select>
+    </div>
+    <a href="{{ url_for('disease_prediction') }}" class="btn solid" data-i18n="scanBtn">Scan a leaf</a>
   </nav>
 
   {% block body %}
   <header class="hero">
     <div>
-      <h1>Know what your crop needs before it shows.</h1>
-      <p>Pick the right crop for your soil, get a fertilizer plan, and spot leaf disease from a single photo.</p>
+      <h1 data-i18n="heroTitle">Know what your crop needs before it shows.</h1>
+      <p data-i18n="heroSubtitle">Pick the right crop for your soil, get a fertilizer plan, and spot leaf disease from a single photo.</p>
       <div class="cta">
-        <a href="{{ url_for('disease_prediction') }}" class="btn solid">Scan a leaf</a>
-        <a href="{{ url_for('crop_recommend') }}" class="btn ghost">Find the right crop</a>
+        <a href="{{ url_for('disease_prediction') }}" class="btn solid" data-i18n="scanBtn">Scan a leaf</a>
+        <a href="{{ url_for('crop_recommend') }}" class="btn ghost" data-i18n="cropBtn">Find the right crop</a>
       </div>
     </div>
 
@@ -128,10 +140,10 @@ footer{padding:48px 0;color:var(--muted);font-size:15px;display:flex;justify-con
           <circle cx="205" cy="112" r="15" fill="#7A4B26"/><circle cx="262" cy="185" r="11" fill="#7A4B26"/><circle cx="150" cy="190" r="8" fill="#8A5A30"/>
           <circle class="spot" cx="205" cy="112" r="28"/><circle class="spot" cx="262" cy="185" r="23"/><circle class="spot" cx="150" cy="190" r="19"/>
         </svg>
-        <span class="tag">Disease found</span>
+        <span class="tag" data-i18n="diseaseTag">Disease found</span>
       </div>
       <div class="result">
-        <div><h3>Tomato – Early Blight</h3><small>Remove infected leaves and treat this week</small></div>
+        <div><h3 data-i18n="scanTitle">Tomato – Early Blight</h3><small data-i18n="scanHint">Remove infected leaves and treat this week</small></div>
         <div class="conf">96%</div>
       </div>
     </div>
@@ -139,57 +151,400 @@ footer{padding:48px 0;color:var(--muted);font-size:15px;display:flex;justify-con
 
   <section id="tools" style="padding-top:24px">
     <div class="head">
-      <h2>Three tools, one field</h2>
-      <p>Use them on their own or in order, from sowing to harvest.</p>
+      <h2 data-i18n="toolsTitle">Three tools, one field</h2>
+      <p data-i18n="toolsSubtitle">Use them on their own or in order, from sowing to harvest.</p>
     </div>
     <div class="tools">
       <a href="{{ url_for('crop_recommend') }}" class="tool">
         <div class="ic i1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22V10M12 12C12 7 9 5 5 5c0 5 3 7 7 7ZM12 15c0-4 3-6 7-6 0 4-3 6-7 6Z"/></svg></div>
-        <h3>Crop recommendation</h3>
-        <p>Tells you which crop suits your land and weather.</p>
-        <div class="in">You enter: N, P, K, pH, rainfall, temperature, humidity</div>
-        <span class="go">Find my crop</span>
+        <h3 data-i18n="cropToolTitle">Crop recommendation</h3>
+        <p data-i18n="cropToolText">Tells you which crop suits your land and weather.</p>
+        <div class="in" data-i18n="cropToolMeta">You enter: N, P, K, pH, rainfall, temperature, humidity</div>
+        <span class="go" data-i18n="cropToolAction">Find my crop</span>
       </a>
       <a href="{{ url_for('fertilizer_recommendation') }}" class="tool">
         <div class="ic i2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 13H7L6 8ZM9 8V5h6v3M9 14h6"/></svg></div>
-        <h3>Fertilizer recommendation</h3>
-        <p>Suggests what to add when your soil is short on nutrients.</p>
-        <div class="in">You enter: crop, soil type, N, P, K, moisture</div>
-        <span class="go">Get a fertilizer plan</span>
+        <h3 data-i18n="fertilizerToolTitle">Fertilizer recommendation</h3>
+        <p data-i18n="fertilizerToolText">Suggests what to add when your soil is short on nutrients.</p>
+        <div class="in" data-i18n="fertilizerToolMeta">You enter: crop, soil type, N, P, K, moisture</div>
+        <span class="go" data-i18n="fertilizerToolAction">Get a fertilizer plan</span>
       </a>
       <a href="{{ url_for('disease_prediction') }}" class="tool">
         <div class="ic i3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="3"/></svg></div>
-        <h3>Plant disease detection</h3>
-        <p>Identifies the disease from a photo of the leaf.</p>
-        <div class="in">You upload: one clear leaf photo (JPG or PNG)</div>
-        <span class="go">Scan a leaf</span>
+        <h3 data-i18n="diseaseToolTitle">Plant disease detection</h3>
+        <p data-i18n="diseaseToolText">Identifies the disease from a photo of the leaf.</p>
+        <div class="in" data-i18n="diseaseToolMeta">You upload: one clear leaf photo (JPG or PNG)</div>
+        <span class="go" data-i18n="diseaseToolAction">Scan a leaf</span>
       </a>
     </div>
   </section>
 
   <section id="how">
     <div class="steps">
-      <h2>From field data to a decision in a minute</h2>
+      <h2 data-i18n="stepsTitle">From field data to a decision in a minute</h2>
       <div class="sgrid">
-        <div class="step"><h3>Give your field details</h3><p>Type in soil and weather values, or upload a leaf photo.</p></div>
-        <div class="step"><h3>The model runs</h3><p>Machine-learning models trained on public Kaggle datasets read your input.</p></div>
-        <div class="step"><h3>Act on the result</h3><p>You get a crop, a fertilizer, or a disease name with what to do next.</p></div>
+        <div class="step"><h3 data-i18n="step1Title">Give your field details</h3><p data-i18n="step1Text">Type in soil and weather values, or upload a leaf photo.</p></div>
+        <div class="step"><h3 data-i18n="step2Title">The model runs</h3><p data-i18n="step2Text">Machine-learning models trained on public Kaggle datasets read your input.</p></div>
+        <div class="step"><h3 data-i18n="step3Title">Act on the result</h3><p data-i18n="step3Text">You get a crop, a fertilizer, or a disease name with what to do next.</p></div>
       </div>
     </div>
   </section>
   {% endblock %}
 
   <footer>
-    <span>CropCare AI – built with Flask, scikit-learn and PyTorch</span>
-    <span>Results are guidance. Confirm with a local agronomist before large treatments.</span>
-    <span class="footer-text">© 2026 CropCare AI. All Rights Reserved.
+    <span data-i18n="footerBuilt">CropCare AI – built with Flask, scikit-learn and PyTorch</span>
+    <span data-i18n="footerNote">Results are guidance. Confirm with a local agronomist before large treatments.</span>
+    <span class="footer-text" data-i18n="footerCopyright">© 2026 CropCare AI. All Rights Reserved.
 Built with ❤️ to support smarter and sustainable farming.
     </span>
-	<!-- <span>© 2026 CropCare AI. All Rights Reserved.
-Built with ❤️ to support smarter and sustainabl.e farming</span> -->
-
   </footer>
 </div>
-{% block scripts %}{% endblock %}
+{% block scripts %}
+<script>
+  window.CROPTCARE_TRANSLATIONS = {
+    en: {
+      navTools: 'Tools',
+      navHow: 'How it works',
+      scanBtn: 'Scan a leaf',
+      cropBtn: 'Find the right crop',
+      heroTitle: 'Know what your crop needs before it shows.',
+      heroSubtitle: 'Pick the right crop for your soil, get a fertilizer plan, and spot leaf disease from a single photo.',
+      diseaseTag: 'Disease found',
+      scanTitle: 'Tomato – Early Blight',
+      scanHint: 'Remove infected leaves and treat this week',
+      toolsTitle: 'Three tools, one field',
+      toolsSubtitle: 'Use them on their own or in order, from sowing to harvest.',
+      cropToolTitle: 'Crop recommendation',
+      cropToolText: 'Tells you which crop suits your land and weather.',
+      cropToolMeta: 'You enter: N, P, K, pH, rainfall, temperature, humidity',
+      cropToolAction: 'Find my crop',
+      fertilizerToolTitle: 'Fertilizer recommendation',
+      fertilizerToolText: 'Suggests what to add when your soil is short on nutrients.',
+      fertilizerToolMeta: 'You enter: crop, soil type, N, P, K, moisture',
+      fertilizerToolAction: 'Get a fertilizer plan',
+      diseaseToolTitle: 'Plant disease detection',
+      diseaseToolText: 'Identifies the disease from a photo of the leaf.',
+      diseaseToolMeta: 'You upload: one clear leaf photo (JPG or PNG)',
+      diseaseToolAction: 'Scan a leaf',
+      stepsTitle: 'From field data to a decision in a minute',
+      step1Title: 'Give your field details',
+      step1Text: 'Type in soil and weather values, or upload a leaf photo.',
+      step2Title: 'The model runs',
+      step2Text: 'Machine-learning models trained on public Kaggle datasets read your input.',
+      step3Title: 'Act on the result',
+      step3Text: 'You get a crop, a fertilizer, or a disease name with what to do next.',
+      footerBuilt: 'CropCare AI – built with Flask, scikit-learn and PyTorch',
+      footerNote: 'Results are guidance. Confirm with a local agronomist before large treatments.',
+      footerCopyright: '© 2026 CropCare AI. All Rights Reserved.\nBuilt with ❤️ to support smarter and sustainable farming.',
+      cropPageTitle: 'Find the best crop for your farm',
+      cropPageIntro: 'Enter your soil values and location. The model suggests the crop that suits them best.',
+      cropStep1: 'Soil nutrients',
+      cropStep2: 'Soil and weather',
+      cropStep3: 'Location',
+      cropFarmDetails: 'Your farm details',
+      cropSample: 'Try sample values',
+      cropFieldsFilled: '0 of 7 fields filled',
+      cropPredict: 'Predict the best crop',
+      cropWhereValues: 'Where to get these values',
+      cropNote: 'Results are guidance. Confirm with a local agronomist before you decide what to sow.',
+      cropTryDifferent: 'Try different values',
+      cropDiseaseCheck: 'Check plant disease',
+      cropGetFertilizer: 'Get a fertilizer plan',
+      cropNextPlan: 'Next, plan your fertilizer',
+      cropNextInfo: 'Find out what your soil needs for',
+      cropRecommended: 'Recommended',
+      cropRecommendation: 'Recommended',
+      cropLabel: 'The best crop for your farm is',
+      cropResultSummary: 'This crop matches your soil nutrients, pH, rainfall and location profile.',
+      cropSubmitLoading: 'Finding the best crop...',
+      cropSectionSoil: 'Soil nutrients',
+      cropSectionWeather: 'Soil and weather',
+      cropNitrogen: 'Nitrogen (N)',
+      cropPhosphorous: 'Phosphorous (P)',
+      cropPotassium: 'Potassium (K)',
+      cropPhLabel: 'pH level',
+      cropPhHint: 'Scale runs from 0 to 14',
+      cropRainfall: 'Rainfall',
+      cropMm: 'mm',
+      cropStateLabel: 'State',
+      cropCityLabel: 'City',
+      cropTipNpk: 'N, P, K and pH',
+      cropTipSoil: 'Take them from your soil test report. Your nearest soil testing lab or Krishi Vigyan Kendra can test a sample.',
+      cropTipRain: 'Rainfall',
+      cropTipRainText: 'Use the average rainfall of your area in millimetres.',
+      cropTipLocation: 'State and city',
+      cropTipLocationText: 'Choose the place where the farm is.',
+      cropPlaceholderNumber: 'e.g. 50',
+      cropPlaceholderPh: 'e.g. 6.5',
+      cropPlaceholderRain: 'e.g. 100',
+      diseasePageTitle: 'Find out which disease your plant has',
+      diseasePageIntro: 'Upload one clear photo of the leaf. The model reads it and names the disease.',
+      diseaseUploadTitle: 'Upload the leaf photo',
+      diseaseUploadPrompt: 'Choose a photo or drop it here',
+      diseaseUploadSub: 'JPG or PNG, up to 10 MB',
+      diseaseSubmit: 'Predict disease',
+      diseaseTipsTitle: 'For a correct result',
+      diseaseTip1: 'One leaf in the frame',
+      diseaseTip2: 'Good daylight',
+      diseaseTip3: 'Plain background',
+      diseaseScanAnother: 'Scan another leaf',
+      diseaseResultLabel: 'Your plant was identified as',
+      diseaseScanComplete: 'Scan complete',
+      fertilizerTitle: 'Get informed advice on fertilizer based on soil',
+      fertilizerCropLabel: 'Crop you want to grow',
+      fertilizerSelectCrop: 'Select crop',
+      fertilizerPredict: 'Predict',
+      fertilizerError: 'Sorry we couldn\'t process your request currently. Please try again',
+      fertilizerRetry: 'Try again',
+      cropPageTitle: 'Find the best crop for your farm',
+      cropPageIntro: 'Enter your soil values and location. The model suggests the crop that suits them best.',
+      cropStep1: 'Soil nutrients',
+      cropStep2: 'Soil and weather',
+      cropStep3: 'Location',
+      cropFarmDetails: 'Your farm details',
+      cropSample: 'Try sample values',
+      cropFieldsFilled: '0 of 7 fields filled',
+      cropPredict: 'Predict the best crop',
+      cropWhereValues: 'Where to get these values',
+      cropNote: 'Results are guidance. Confirm with a local agronomist before you decide what to sow.',
+      cropTryDifferent: 'Try different values',
+      cropDiseaseCheck: 'Check plant disease',
+      cropGetFertilizer: 'Get a fertilizer plan',
+      cropNextPlan: 'Next, plan your fertilizer',
+      cropNextInfo: 'Find out what your soil needs for',
+      cropRecommended: 'Recommended',
+      cropLabel: 'The best crop for your farm is',
+      diseasePageTitle: 'Find out which disease your plant has',
+      diseasePageIntro: 'Upload one clear photo of the leaf. The model reads it and names the disease.',
+      diseaseUploadTitle: 'Upload the leaf photo',
+      diseaseUploadPrompt: 'Choose a photo or drop it here',
+      diseaseUploadSub: 'JPG or PNG, up to 10 MB',
+      diseaseSubmit: 'Predict disease',
+      diseaseTipsTitle: 'For a correct result',
+      diseaseTip1: 'One leaf in the frame',
+      diseaseTip2: 'Good daylight',
+      diseaseTip3: 'Plain background',
+      diseaseScanAnother: 'Scan another leaf',
+      diseaseResultLabel: 'Your plant was identified as',
+      diseaseScanComplete: 'Scan complete',
+      fertilizerTitle: 'Get informed advice on fertilizer based on soil',
+      fertilizerCropLabel: 'Crop you want to grow',
+      fertilizerSelectCrop: 'Select crop',
+      fertilizerPredict: 'Predict',
+      fertilizerError: 'Sorry we couldn\'t process your request currently. Please try again',
+      fertilizerRetry: 'Try again',
+      fertilizerSelectCropOption: 'Select crop'
+    },
+    hi: {
+      navTools: 'उपकरण',
+      navHow: 'यह कैसे काम करता है',
+      scanBtn: 'पत्ती स्कैन करें',
+      cropBtn: 'सही फसल चुनें',
+      heroTitle: 'अपने फसल की जरूरत को सामने आने से पहले समझें।',
+      heroSubtitle: 'अपनी मिट्टी के हिसाब से सही फसल चुनें, उर्वरक योजना पाएं, और एक फोटो से पत्तियों की बीमारी पहचानें।',
+      diseaseTag: 'बीमारी मिली',
+      scanTitle: 'टमाटर – प्रारंभिक धब्बा',
+      scanHint: 'संक्रमित पत्तियों को हटाकर इस सप्ताह इलाज करें',
+      toolsTitle: 'तीन उपकरण, एक खेत',
+      toolsSubtitle: 'उन्हें अलग से या क्रम में उपयोग करें, बुवाई से कटाई तक।',
+      cropToolTitle: 'फसल सिफारिश',
+      cropToolText: 'बताता है कि आपकी जमीन और मौसम के लिए कौन-सी फसल सही है।',
+      cropToolMeta: 'आप दर्ज करते हैं: N, P, K, pH, वर्षा, तापमान, नमी',
+      cropToolAction: 'मेरी फसल खोजें',
+      fertilizerToolTitle: 'उर्वरक सिफारिश',
+      fertilizerToolText: 'सुझाव देता है कि मिट्टी में पोषक तत्व कम होने पर क्या जोड़ना चाहिए।',
+      fertilizerToolMeta: 'आप दर्ज करते हैं: फसल, मिट्टी का प्रकार, N, P, K, नमी',
+      fertilizerToolAction: 'उर्वरक योजना पाएं',
+      diseaseToolTitle: 'पौधों की बीमारी का पता',
+      diseaseToolText: 'पत्ती की फोटो से बीमारी की पहचान करता है।',
+      diseaseToolMeta: 'आप अपलोड करते हैं: एक साफ पत्ती की फोटो (JPG या PNG)',
+      diseaseToolAction: 'पत्ती स्कैन करें',
+      stepsTitle: 'खेत के डेटा से एक मिनट में निर्णय',
+      step1Title: 'अपने खेत की जानकारी दें',
+      step1Text: 'मिट्टी और मौसम के मान दर्ज करें, या पत्ती की फोटो अपलोड करें।',
+      step2Title: 'मॉडल चल रहा है',
+      step2Text: 'पब्लिक Kaggle डेटा पर प्रशिक्षित मशीन-लर्निंग मॉडल आपके इनपुट को पढ़ते हैं।',
+      step3Title: 'परिणाम पर कार्रवाई करें',
+      step3Text: 'आपको फसल, उर्वरक, या बीमारी का नाम मिल जाता है और उसके बाद क्या करना है भी पता चलता है।',
+      footerBuilt: 'CropCare AI – Flask, scikit-learn और PyTorch के साथ बनाया गया',
+      footerNote: 'परिणाम दिशानिर्देश हैं। बड़े उपचार से पहले स्थानीय कृषि विशेषज्ञ से पुष्टि करें।',
+      footerCopyright: '© 2026 CropCare AI. सर्वाधिकार सुरक्षित।\nस्मार्ट और टिकाऊ खेती को बढ़ावा देने के लिए ❤️ से बनाया गया।',
+      cropPageTitle: 'अपने खेत के लिए सबसे अच्छी फसल खोजें',
+      cropPageIntro: 'अपनी मिट्टी की जानकारी और स्थान दर्ज करें। मॉडल सबसे उपयुक्त फसल सुझाता है।',
+      cropStep1: 'मिट्टी के पोषक तत्व',
+      cropStep2: 'मिट्टी और मौसम',
+      cropStep3: 'स्थान',
+      cropFarmDetails: 'आपके खेत का विवरण',
+      cropSample: 'नमूना मान आजमाएं',
+      cropFieldsFilled: '7 में से 0 फील्ड भरे गए',
+      cropPredict: 'सबसे अच्छी फसल की भविष्यवाणी करें',
+      cropWhereValues: 'ये मान कहाँ से लें',
+      cropNote: 'परिणाम दिशानिर्देश हैं। बीज चुनने से पहले स्थानीय कृषि विशेषज्ञ से पुष्टि करें।',
+      cropTryDifferent: 'अलग मान आजमाएं',
+      cropDiseaseCheck: 'पौधे की बीमारी जांचें',
+      cropGetFertilizer: 'उर्वरक योजना पाएं',
+      cropNextPlan: 'अगला कदम: उर्वरक योजना बनाएं',
+      cropNextInfo: 'जानें कि आपकी मिट्टी को {crop} के लिए क्या चाहिए',
+      cropRecommended: 'सिफारिश',
+      cropLabel: 'आपके खेत के लिए सबसे अच्छी फसल है',
+      cropResultSummary: 'यह फसल आपकी मिट्टी के पोषक तत्वों, pH, वर्षा और स्थान के प्रोफ़ाइल से मेल खाती है।',
+      cropSubmitLoading: 'सबसे अच्छी फसल ढूँढी जा रही है...',
+      cropSectionSoil: 'मिट्टी के पोषक तत्व',
+      cropSectionWeather: 'मिट्टी और मौसम',
+      cropSectionLocation: 'स्थान',
+      cropNitrogen: 'नाइट्रोजन (N)',
+      cropPhosphorous: 'फास्फोरस (P)',
+      cropPotassium: 'पोटैशियम (K)',
+      cropPhLabel: 'pH स्तर',
+      cropPhHint: 'स्केल 0 से 14 तक है',
+      cropRainfall: 'वर्षा',
+      cropMm: 'मिमी',
+      cropStateLabel: 'राज्य',
+      cropCityLabel: 'शहर',
+      cropTipNpk: 'N, P, K और pH',
+      cropTipSoil: 'इन्हें अपनी मिट्टी के परीक्षण रिपोर्ट से लें। आपके नज़दीकी मिट्टी परीक्षण प्रयोगशाला या कृषि विज्ञान केंद्र से नमूना परीक्षण करवा सकते हैं।',
+      cropTipRain: 'वर्षा',
+      cropTipRainText: 'अपने क्षेत्र की औसत वर्षा मिलीमीटर में उपयोग करें।',
+      cropTipLocation: 'राज्य और शहर',
+      cropTipLocationText: 'उसे स्थान चुनें जहाँ खेत है।',
+      cropPlaceholderNumber: 'उदाहरण: 50',
+      cropPlaceholderPh: 'उदाहरण: 6.5',
+      cropPlaceholderRain: 'उदाहरण: 100',
+      diseasePageTitle: 'पता लगाएं आपका पौधा किस बीमारी से ग्रस्त है',
+      diseasePageIntro: 'पत्ती की एक साफ फोटो अपलोड करें। मॉडल उसे पढ़कर बीमारी का नाम बताता है।',
+      diseaseUploadTitle: 'पत्ती की फोटो अपलोड करें',
+      diseaseUploadPrompt: 'फोटो चुनें या यहाँ ड्रॉप करें',
+      diseaseUploadSub: 'JPG या PNG, अधिकतम 10 MB',
+      diseaseSubmit: 'बीमारी का अनुमान लगाएं',
+      diseaseTipsTitle: 'सही परिणाम के लिए',
+      diseaseTip1: 'फ्रेम में केवल एक पत्ती',
+      diseaseTip2: 'अच्छा दिन का प्रकाश',
+      diseaseTip3: 'सादा पृष्ठभूमि',
+      diseaseScanAnother: 'दूसरी पत्ती स्कैन करें',
+      diseaseResultLabel: 'आपके पौधे की पहचान इस रूप में हुई',
+      diseaseScanComplete: 'स्कैन पूरा',
+      fertilizerTitle: 'मिट्टी के आधार पर उर्वरक पर जानकारी प्राप्त करें',
+      fertilizerCropLabel: 'आप कौन सी फसल उगाना चाहते हैं',
+      fertilizerSelectCrop: 'फसल चुनें',
+      fertilizerPredict: 'भविष्यवाणी करें',
+      fertilizerError: 'माफ़ कीजिए, हम अभी आपका अनुरोध प्रोसेस नहीं कर सके। कृपया फिर से प्रयास करें',
+      fertilizerRetry: 'फिर से प्रयास करें'
+    },
+    ur: {
+      navTools: 'آلات',
+      navHow: 'یہ کیسے کام کرتا ہے',
+      scanBtn: 'پتہ اسکین کریں',
+      cropBtn: 'صحیح فصل منتخب کریں',
+      heroTitle: 'اپنی فصل کی ضرورت کو ظاہر ہونے سے پہلے جانیں۔',
+      heroSubtitle: 'اپنی مٹی کے مطابق صحیح فصل منتخب کریں، کھاد کا منصوبہ حاصل کریں، اور ایک تصویر سے پتی کی بیماری کا پتہ لگائیں۔',
+      diseaseTag: 'بیماری ملی',
+      scanTitle: 'ٹماٹر – ابتدائی بلائی',
+      scanHint: 'متاثر پتیوں کو ہٹائیں اور اس ہفتے علاج کریں',
+      toolsTitle: 'تین اوزار، ایک کھیت',
+      toolsSubtitle: 'انہیں الگ سے یا ترتیب میں استعمال کریں، بونے سے کٹائی تک۔',
+      cropToolTitle: 'فصل کی سفارش',
+      cropToolText: 'بتاتا ہے کہ آپ کے زمین اور موسم کے لیے کون سی فصل مناسب ہے۔',
+      cropToolMeta: 'آپ درج کرتے ہیں: N, P, K, pH, بارش، درجہ حرارت، نمی',
+      cropToolAction: 'میری فصل تلاش کریں',
+      fertilizerToolTitle: 'کھاد کی سفارش',
+      fertilizerToolText: 'تجاویز دیتا ہے کہ مٹی میں غذائی اجزاء کم ہونے پر کیا شامل کرنا ہے۔',
+      fertilizerToolMeta: 'آپ درج کرتے ہیں: فصل، مٹی کی قسم، N, P, K, نمی',
+      fertilizerToolAction: 'کھاد کا منصوبہ حاصل کریں',
+      diseaseToolTitle: 'پودوں کی بیماری کا پتہ',
+      diseaseToolText: 'پتی کی تصویر سے بیماری کی شناخت کرتا ہے۔',
+      diseaseToolMeta: 'آپ اپ لوڈ کرتے ہیں: ایک صاف پتی کی تصویر (JPG یا PNG)',
+      diseaseToolAction: 'پتہ اسکین کریں',
+      stepsTitle: 'کھیت کے ڈیٹا سے ایک منٹ میں فیصلہ',
+      step1Title: 'اپنے کھیت کی معلومات دیں',
+      step1Text: 'مٹی اور موسم کے اقدار درج کریں، یا پتی کی تصویر اپ لوڈ کریں۔',
+      step2Title: 'ماڈل کام کر رہا ہے',
+      step2Text: 'پبلک Kaggle ڈیٹا پر تربیت یافتہ مشین لرننگ ماڈلز آپ کے ان پٹ کو پڑھتے ہیں۔',
+      step3Title: 'نتیجہ پر عمل کریں',
+      step3Text: 'آپ کو فصل، کھاد، یا بیماری کا نام ملتا ہے اور اگلا کیا کرنا ہے بھی معلوم ہوتا ہے۔',
+      footerBuilt: 'CropCare AI – Flask، scikit-learn اور PyTorch کے ساتھ بنایا گیا',
+      footerNote: 'نتائج رہنمائی ہیں۔ بڑے علاج سے پہلے مقامی ماہر سے تصدیق کریں۔',
+      footerCopyright: '© 2026 CropCare AI. تمام حقوق محفوظ ہیں۔\nسمارٹ اور پائیدار زراعت کو فروغ دینے کے لیے ❤️ سے بنایا گیا۔',
+      cropPageTitle: 'اپنی زمین کے لیے بہترین فصل تلاش کریں',
+      cropPageIntro: 'اپنی مٹی کی قیمتیں اور مقام درج کریں۔ ماڈل بہترین فصیل تجویز کرتا ہے۔',
+      cropStep1: 'مٹی کے غذائی اجزاء',
+      cropStep2: 'مٹی اور موسم',
+      cropStep3: 'مقام',
+      cropFarmDetails: 'آپ کے کھیت کی تفصیلات',
+      cropSample: 'نمونہ اقدار آزماۓ',
+      cropFieldsFilled: '7 میں سے 0 خانے بھرے گئے',
+      cropPredict: 'بہترین فصل کا اندازہ لگائیں',
+      cropWhereValues: 'یہ اقدار کہاں سے حاصل کریں',
+      cropNote: 'نتائج رہنمائی ہیں۔ بیج کا فیصلہ کرنے سے پہلے مقامی ماہر سے تصدیق کریں۔',
+      cropTryDifferent: 'مختلف اقدار آزماۓ',
+      cropDiseaseCheck: 'پودے کی بیماری چیک کریں',
+      cropGetFertilizer: 'کھاد کا منصوبہ حاصل کریں',
+      cropNextPlan: 'اگلا قدم: کھاد کا منصوبہ بنائیں',
+      cropNextInfo: 'جانیں کہ آپ کی مٹی کو اس کے لیے کیا چاہیے',
+      cropRecommended: 'سفارش',
+      cropLabel: 'آپ کے کھیت کے لیے بہترین فصل ہے',
+      diseasePageTitle: 'جانیں آپ کے پودے کو کون سی بیماری ہے',
+      diseasePageIntro: 'پتی کی ایک صاف تصویر اپ لوڈ کریں۔ ماڈل اسے پڑھ کر بیماری کا نام بتاتا ہے۔',
+      diseaseUploadTitle: 'پتی کی تصویر اپ لوڈ کریں',
+      diseaseUploadPrompt: 'تصویر منتخب کریں یا یہاں ڈراپ کریں',
+      diseaseUploadSub: 'JPG یا PNG، زیادہ سے زیادہ 10 MB',
+      diseaseSubmit: 'بیماری کا اندازہ لگائیں',
+      diseaseTipsTitle: 'درست نتیجہ کے لیے',
+      diseaseTip1: 'فریم میں صرف ایک پتی',
+      diseaseTip2: 'اچھا دن کا روشنی',
+      diseaseTip3: 'سادہ پس منظر',
+      diseaseScanAnother: 'دوسری پتی اسکین کریں',
+      diseaseResultLabel: 'آپ کے پودے کی شناخت اس طرح ہوئی',
+      diseaseScanComplete: 'اسکین مکمل',
+      fertilizerTitle: 'مٹی کی بنیاد پر کھاد کے بارے میں معلومات حاصل کریں',
+      fertilizerCropLabel: 'آپ کون سی فصل اگانا چاہتے ہیں',
+      fertilizerSelectCrop: 'فصل منتخب کریں',
+      fertilizerPredict: 'پیش گوئی کریں',
+      fertilizerError: 'معذرت، ہم ابھی آپ کا درخواست پروسیس نہیں کر سکے۔ براہ کرم دوبارہ کوشش کریں',
+      fertilizerRetry: 'دوبارہ کوشش کریں'
+    }
+  };
+
+  const select = document.getElementById('lang-select');
+
+  function setLanguage(language) {
+    const langMap = window.CROPTCARE_TRANSLATIONS[language] || window.CROPTCARE_TRANSLATIONS.en;
+
+    document.querySelectorAll('[data-i18n]').forEach((element) => {
+      const key = element.dataset.i18n;
+      if (langMap[key]) {
+        element.textContent = langMap[key];
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+      const key = element.dataset.i18nPlaceholder;
+      if (langMap[key]) {
+        element.placeholder = langMap[key];
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-value]').forEach((element) => {
+      const key = element.dataset.i18nValue;
+      if (langMap[key]) {
+        element.value = langMap[key];
+      }
+    });
+
+    if (select) {
+      select.value = language;
+    }
+
+    localStorage.setItem('cropcare-language', language);
+    document.documentElement.lang = language;
+  }
+
+  if (select) {
+    const savedLanguage = localStorage.getItem('cropcare-language') || 'en';
+    select.value = savedLanguage;
+    setLanguage(savedLanguage);
+    select.addEventListener('change', (event) => setLanguage(event.target.value));
+  }
+</script>
+{% endblock %}
 </body>
 </html>

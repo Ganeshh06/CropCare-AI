@@ -87,12 +87,12 @@
 <div class="container cf-page">
 
   <div class="cf-hero">
-    <h1>Find the best crop for your farm</h1>
-    <p>Enter your soil values and location. The model suggests the crop that suits them best.</p>
+    <h1 data-i18n="cropPageTitle">Find the best crop for your farm</h1>
+    <p data-i18n="cropPageIntro">Enter your soil values and location. The model suggests the crop that suits them best.</p>
     <div class="cf-steps">
-      <span><b>1</b>Soil nutrients</span>
-      <span><b>2</b>Soil and weather</span>
-      <span><b>3</b>Location</span>
+      <span><b>1</b><span data-i18n="cropStep1">Soil nutrients</span></span>
+      <span><b>2</b><span data-i18n="cropStep2">Soil and weather</span></span>
+      <span><b>3</b><span data-i18n="cropStep3">Location</span></span>
     </div>
     <svg class="field" viewBox="0 0 380 160" fill="none" aria-hidden="true">
       <path d="M0 150C70 110 150 95 380 70V160H0Z" fill="#1D5A2D"/>
@@ -108,54 +108,54 @@
 
     <form class="cf-card" method="POST" action="{{ url_for('crop_prediction') }}" id="cropForm">
       <div class="cf-top">
-        <h2>Your farm details</h2>
-        <button type="button" class="cf-sample" id="sampleBtn">Try sample values</button>
+        <h2 data-i18n="cropFarmDetails">Your farm details</h2>
+        <button type="button" class="cf-sample" id="sampleBtn" data-i18n="cropSample">Try sample values</button>
       </div>
       <div class="cf-prog">
         <div class="cf-bar"><i id="progBar"></i></div>
-        <div class="cf-count" id="progText">0 of 7 fields filled</div>
+        <div class="cf-count" id="progText" data-i18n="cropFieldsFilled">0 of 7 fields filled</div>
       </div>
 
-      <div class="cf-section"><span class="n">1</span>Soil nutrients</div>
+      <div class="cf-section"><span class="n">1</span><span data-i18n="cropSectionSoil">Soil nutrients</span></div>
       <div class="cf-row">
         <div class="cf-field">
-          <label for="Nitrogen">Nitrogen (N)</label>
-          <input type="number" class="form-control" id="Nitrogen" name="nitrogen" placeholder="e.g. 50" min="0" required>
+          <label for="Nitrogen" data-i18n="cropNitrogen">Nitrogen (N)</label>
+          <input type="number" class="form-control" id="Nitrogen" name="nitrogen" data-i18n-placeholder="cropPlaceholderNumber" placeholder="e.g. 50" min="0" required>
         </div>
         <div class="cf-field">
-          <label for="Phosphorous">Phosphorous (P)</label>
-          <input type="number" class="form-control" id="Phosphorous" name="phosphorous" placeholder="e.g. 50" min="0" required>
+          <label for="Phosphorous" data-i18n="cropPhosphorous">Phosphorous (P)</label>
+          <input type="number" class="form-control" id="Phosphorous" name="phosphorous" data-i18n-placeholder="cropPlaceholderNumber" placeholder="e.g. 50" min="0" required>
         </div>
         <div class="cf-field">
-          <label for="Pottasium">Potassium (K)</label>
-          <input type="number" class="form-control" id="Pottasium" name="pottasium" placeholder="e.g. 50" min="0" required>
+          <label for="Pottasium" data-i18n="cropPotassium">Potassium (K)</label>
+          <input type="number" class="form-control" id="Pottasium" name="pottasium" data-i18n-placeholder="cropPlaceholderNumber" placeholder="e.g. 50" min="0" required>
         </div>
       </div>
 
-      <div class="cf-section"><span class="n">2</span>Soil and weather</div>
+      <div class="cf-section"><span class="n">2</span><span data-i18n="cropSectionWeather">Soil and weather</span></div>
       <div class="cf-row two">
         <div class="cf-field">
-          <label for="ph">pH level</label>
-          <input type="number" step="0.01" min="0" max="14" class="form-control" id="ph" name="ph" placeholder="e.g. 6.5" required>
-          <span class="cf-hint">Scale runs from 0 to 14</span>
+          <label for="ph" data-i18n="cropPhLabel">pH level</label>
+          <input type="number" step="0.01" min="0" max="14" class="form-control" id="ph" name="ph" data-i18n-placeholder="cropPlaceholderPh" placeholder="e.g. 6.5" required>
+          <span class="cf-hint" data-i18n="cropPhHint">Scale runs from 0 to 14</span>
         </div>
         <div class="cf-field">
-          <label for="Rainfall">Rainfall</label>
+          <label for="Rainfall" data-i18n="cropRainfall">Rainfall</label>
           <div class="cf-unit">
-            <input type="number" step="0.01" min="0" class="form-control" id="Rainfall" name="rainfall" placeholder="e.g. 100" required>
-            <em>mm</em>
+            <input type="number" step="0.01" min="0" class="form-control" id="Rainfall" name="rainfall" data-i18n-placeholder="cropPlaceholderRain" placeholder="e.g. 100" required>
+            <em data-i18n="cropMm">mm</em>
           </div>
         </div>
       </div>
 
-      <div class="cf-section"><span class="n">3</span>Location</div>
+      <div class="cf-section"><span class="n">3</span><span data-i18n="cropSectionLocation">Location</span></div>
       <div class="cf-row two">
         <div class="cf-field">
-          <label for="sts">State</label>
+          <label for="sts" data-i18n="cropStateLabel">State</label>
           <select onchange="print_city('state', this.selectedIndex);" id="sts" name="stt" class="form-control" required></select>
         </div>
         <div class="cf-field">
-          <label for="state">City</label>
+          <label for="state" data-i18n="cropCityLabel">City</label>
           <select id="state" class="form-control" name="city" required></select>
         </div>
       </div>
@@ -163,26 +163,26 @@
         print_state("sts");
       </script>
 
-      <button type="submit" class="cf-submit" id="cropSubmit">Predict the best crop</button>
+      <button type="submit" class="cf-submit" id="cropSubmit" data-i18n="cropPredict">Predict the best crop</button>
     </form>
 
     <aside class="cf-card cf-side">
-      <h2>Where to get these values</h2>
+      <h2 data-i18n="cropWhereValues">Where to get these values</h2>
       <ul class="cf-tips">
         <li>
           <span class="ic a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L5 19a1 1 0 0 0 .9 1.5h12.2A1 1 0 0 0 19 19l-5-10V3"/></svg></span>
-          <div><b>N, P, K and pH</b>Take them from your soil test report. Your nearest soil testing lab or Krishi Vigyan Kendra can test a sample.</div>
+          <div><b data-i18n="cropTipNpk">N, P, K and pH</b><span data-i18n="cropTipSoil">Take them from your soil test report. Your nearest soil testing lab or Krishi Vigyan Kendra can test a sample.</span></div>
         </li>
         <li>
           <span class="ic b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16a4 4 0 0 1-.5-7.97A5.5 5.5 0 0 1 17 7a4.5 4.5 0 0 1 .5 9M9 19l-1 2M13 19l-1 2M17 19l-1 2"/></svg></span>
-          <div><b>Rainfall</b>Use the average rainfall of your area in millimetres.</div>
+          <div><b data-i18n="cropTipRain">Rainfall</b><span data-i18n="cropTipRainText">Use the average rainfall of your area in millimetres.</span></div>
         </li>
         <li>
           <span class="ic c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-          <div><b>State and city</b>Choose the place where the farm is.</div>
+          <div><b data-i18n="cropTipLocation">State and city</b><span data-i18n="cropTipLocationText">Choose the place where the farm is.</span></div>
         </li>
       </ul>
-      <p class="cf-note">Results are guidance. Confirm with a local agronomist before you decide what to sow.</p>
+      <p class="cf-note" data-i18n="cropNote">Results are guidance. Confirm with a local agronomist before you decide what to sow.</p>
     </aside>
 
   </div>

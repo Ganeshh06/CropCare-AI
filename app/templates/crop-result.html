@@ -61,28 +61,44 @@
 <div class="container cr-page">
 
   <div class="cr-card">
-    <span class="cr-badge">Recommended</span>
+    <span class="cr-badge" data-i18n="cropRecommended">Recommended</span>
     <div class="cr-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V10M12 12C12 7 9 5 5 5c0 5 3 7 7 7ZM12 15c0-4 3-6 7-6 0 4-3 6-7 6Z"/></svg>
     </div>
-    <p class="cr-label">The best crop for your farm is</p>
-    <h1 class="cr-crop">{{ prediction | capitalize }}</h1>
-    <p class="cr-sub">This crop matches your soil nutrients, pH, rainfall and location profile.</p>
+    <p class="cr-label" data-i18n="cropLabel">The best crop for your farm is</p>
+    <h1 id="cropResultName" class="cr-crop" data-crop-name="{{ prediction | lower }}">{{ prediction | capitalize }}</h1>
+    <p class="cr-sub" data-i18n="cropResultSummary">This crop matches your soil nutrients, pH, rainfall and location profile.</p>
   </div>
 
   <div class="cr-actions">
-    <a href="{{ url_for('crop_recommend') }}" class="cr-btn solid">Try different values</a>
-    <a href="{{ url_for('disease_prediction') }}" class="cr-btn ghost">Check plant disease</a>
+    <a href="{{ url_for('crop_recommend') }}" class="cr-btn solid" data-i18n="cropTryDifferent">Try different values</a>
+    <a href="{{ url_for('disease_prediction') }}" class="cr-btn ghost" data-i18n="cropDiseaseCheck">Check plant disease</a>
   </div>
 
   <div class="cr-next">
     <div>
-      <b>Next, plan your fertilizer</b>
-      <span>Find out what your soil needs for {{ prediction | lower }}.</span>
+      <b data-i18n="cropNextPlan">Next, plan your fertilizer</b>
+      <span id="cropNextInfo" data-i18n="cropNextInfo" data-crop-name="{{ prediction | lower }}">Find out what your soil needs for {{ prediction | lower }}.</span>
     </div>
-    <a href="{{ url_for('fertilizer_recommendation') }}" class="cr-btn solid">Get a fertilizer plan</a>
+    <a href="{{ url_for('fertilizer_recommendation') }}" class="cr-btn solid" data-i18n="cropGetFertilizer">Get a fertilizer plan</a>
   </div>
 
-  <p class="cr-note">Results are guidance. Confirm with a local agronomist before you decide what to sow.</p>
+  <p class="cr-note" data-i18n="cropNote">Results are guidance. Confirm with a local agronomist before you decide what to sow.</p>
 </div>
+<script>
+  (function () {
+    const cropName = document.getElementById('cropResultName');
+    const nextInfo = document.getElementById('cropNextInfo');
+    const translated = window.CROPTCARE_CROP_NAMES || {};
+    const currentLang = localStorage.getItem('cropcare-language') || 'en';
+    const cropKey = (cropName && cropName.dataset.cropName) ? cropName.dataset.cropName.toLowerCase() : '';
+    if (cropName && translated[currentLang] && translated[currentLang][cropKey]) {
+      cropName.textContent = translated[currentLang][cropKey];
+    }
+    if (nextInfo && translated[currentLang] && translated[currentLang][cropKey]) {
+      const factoryText = (window.CROPTCARE_TRANSLATIONS && window.CROPTCARE_TRANSLATIONS[currentLang] && window.CROPTCARE_TRANSLATIONS[currentLang].cropNextInfo) || 'Find out what your soil needs for';
+      nextInfo.textContent = factoryText + ' ' + translated[currentLang][cropKey] + '.';
+    }
+  })();
+</script>
 {% endblock %}

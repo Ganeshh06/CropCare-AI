@@ -60,16 +60,16 @@
   <div class="rs-card">
     <span class="rs-badge">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>
-      Scan complete
+      <span data-i18n="diseaseScanComplete">Scan complete</span>
     </span>
-    <p class="rs-label">Your plant was identified as</p>
+    <p class="rs-label" data-i18n="diseaseResultLabel">Your plant was identified as</p>
     <h1 class="rs-result">{{ prediction | replace('___', ' – ') | replace('_', ' ') }}</h1>
 
     <div class="rs-actions">
-      <a href="{{ url_for('disease_prediction') }}" class="rs-btn solid">Scan another leaf</a>
-      <a href="{{ url_for('fertilizer_recommendation') }}" class="rs-btn ghost">Get a fertilizer plan</a>
+      <a href="{{ url_for('disease_prediction') }}" class="rs-btn solid" data-i18n="diseaseScanAnother">Scan another leaf</a>
+      <a href="{{ url_for('fertilizer_recommendation') }}" class="rs-btn ghost" data-i18n="cropGetFertilizer">Get a fertilizer plan</a>
     </div>
   </div>
-  <p class="rs-note">Results are guidance. Confirm with a local agronomist before a large treatment.</p>
+  <p class="rs-note" data-i18n="diseaseResultNote">Results are guidance. Confirm with a local agronomist before a large treatment.</p>
 </div>
 {% endblock %}
